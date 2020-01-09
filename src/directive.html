@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>directive</title>
+</head>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<body>
+<div id="root" v-loading="isLoading">
+    <div>{{data}}</div>
+    <button @click="update">更新</button>
+</div>
+<script>
+    // 使用directive可以非侵入式的实现一些功能,并且可以打包给其他人使用,自己使用的时候可以抽离一些通用的方法,
+    // 比如这里的幕布
+    Vue.directive('loading', {
+        // * [自定义指令 — Vue.js](https://cn.vuejs.org/v2/guide/custom-
+        // * [Vue 进阶 | 「小慕读书」管理后台](http://www.youbaobao.xyz/admin-docs/guide/base/vue.html#directive-%E7%94%A8%E6%B3%95)
+
+        // 注意这里的update是VUE内建的钩子函数和上面的组件中的update没有一点关系名字正好一样而已
+        update(el, binding, vnode) {
+            if (binding.value) {
+                const div = document.createElement('div')
+                div.innerText = '加载...'
+                div.setAttribute('id', 'loading')
+                div.style.position = 'absolute'
+                div.style.left = 0
+                div.style.top = 0
+                div.style.width = '100%'
+                div.style.height = '100%'
+                div.style.display = 'flex'
+                div.style.justifyContent = 'center'
+                div.style.alignItems = 'center'
+                div.style.color = 'white'
+                div.style.background = 'rgba(0,0,0,.7)'
+                document.body.append(div)
+            } else {
+                document.body.removeChild(document.getElementById('loading'))
+            }
+        }
+    })
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                isLoading: false,
+                data: ''
+            }
+        }, methods: {
+            update() {
+                this.isLoading = true
+                setTimeout(() => {
+                    this.data = '用户数据'
+                    this.isLoading = false
+                }, 3000)
+            }
+        }
+    })
+</script>
+</body>
+</html>
