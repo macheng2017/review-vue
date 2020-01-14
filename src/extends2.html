@@ -28,7 +28,15 @@
 
 </div>
 <script>
-    const LoadingComponent = Vue.extend()
+    const LoadingComponent = Vue.extend({
+        template: '<div id="loading-wrapper">{{msg}}</div>',
+        props: {
+            msg: {
+                type: String,
+                default: 'loading... 其实会被覆盖的'
+            }
+        }
+    })
     const Loading = (msg) => {
 
         // why create the div node?
