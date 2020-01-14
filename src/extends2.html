@@ -28,29 +28,29 @@
 
 </div>
 <script>
+    const LoadingComponent = Vue.extend()
     const Loading = (msg) => {
-        const LoadingComponent = Vue.extend({
+
+        // why create the div node?
+        // model this <div id="loading-wrapper"></div>
+        const div = document.createElement('div')
+        div.setAttribute('id', 'loading-wrapper')
+        document.body.append(div)
+        // 替换了上面的div,
+        // 有个问题:为什么要替换,直接增加不行吗?
+        // 注释了上面几行发现直接增加不行,[Vue warn]: Cannot find element: #loading-wrapper
+        // 看来必须先存在才能替换$mount是替换的
+        new LoadingComponent({
             template: '<div id="loading-wrapper">{{msg}}</div>',
             props: {
                 msg: {
                     type: String,
                     default: msg
                 }
-            },
-            name: 'LoadingComponent'
-        })
-        // why create the div node?
-        // model this <div id="loading-wrapper"></div>
-        // const div = document.createElement('div')
-        // div.setAttribute('id', 'loading-wrapper')
-        // document.body.append(div)
-        // 替换了上面的div,
-        // 有个问题:为什么要替换,直接增加不行吗?
-        // 注释了上面几行发现直接增加不行,[Vue warn]: Cannot find element: #loading-wrapper
-        // 看来必须先存在才能替换$mount是替换的
-        // new LoadingComponent().$mount('#loading-wrapper')
+            }
+        }).$mount('#loading-wrapper')
         //  查文档后得到了另一种写法  [API — Vue.js](https://vuejs.org/v2/api/#vm-mount)
-        document.getElementById('app').appendChild(new LoadingComponent().$mount().$el)
+        // document.getElementById('app').appendChild(new LoadingComponent().$mount().$el)
         // 这种返回一个函数的写法好像见过,在哪里忘了
         return () => {
             document.body.removeChild(document.getElementById('loading-wrapper'))
@@ -76,7 +76,7 @@
                 setTimeout(() => {
                     console.log('do it ')
                     hide()
-                }, 5000)
+                }, 1000)
             }
         }
 
