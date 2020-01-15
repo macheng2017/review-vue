@@ -17,6 +17,7 @@
         <router-link to="/dog">dog</router-link>
         <router-link to="/cat">cat</router-link>
         <router-link to="/cup">cup</router-link>
+        <router-link :to="{name:'user',params:{id:123}}">命名路由user</router-link>
     </p>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
@@ -49,10 +50,12 @@
         {
             path: '/user/:id',
             component: User,
+            // [命名路由 | Vue Router](https://router.vuejs.org/zh/guide/essentials/named-routes.html)
+            name: 'user',
             children: [
                 {
                     path: 'profile',
-                    component: UserProfile
+                    component: UserProfile,
                 }
             ]
         },
