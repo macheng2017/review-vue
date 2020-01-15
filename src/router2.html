@@ -29,7 +29,8 @@
     // 1. 定义 (路由) 组件。
     // 可以从其他文件 import 进来
     const Dog = {template: '<div>dog dog</div>'}
-    const User = {template: '<div>show User {{$route.params.id}}</div>'}
+    const User = {template: '<div>show User {{$route.params.id}} <router-view> </router-view></div>'}
+    const UserProfile = {template: '<div>user profile</div>'}
     const Cat = {template: '<div>cat cat</div>'}
     const Cup = Vue.extend({
         template: '<div id="load-wrapper"> wrapper{{msg}} </div>',
@@ -45,7 +46,16 @@
     const routes = [
         {path: '/dog', component: Dog},
         {path: '/cat', component: Cat},
-        {path: '/user/:id', component: User},
+        {
+            path: '/user/:id',
+            component: User,
+            children: [
+                {
+                    path: 'profile',
+                    component: UserProfile
+                }
+            ]
+        },
         {path: '/cup', component: Cup}, // 这里为什么不需要new Cup()?
     ]
 
