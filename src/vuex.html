@@ -15,7 +15,6 @@
 </div>
 <script>
     Vue.use(Vuex)
-
     const store = new Vuex.Store({
         state: {
             count: 0
@@ -31,14 +30,16 @@
         template: `
             <div>{{count}}</div>`,
         computed: {
-            count() {
-                return store.state.count
+            count(){
+                // 通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。让我们更新下 Counter 的实现：
+                return this.$store.state.count
             }
         }
     }
 
     new Vue({
         el: '#root',
+        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
         data() {
             return {
                 message: 'Test Extend Component'
