@@ -32,6 +32,9 @@
                 // 试过了这样不行
                 // return getters.doneTodos(state).length
                 return getters.doneTodos.length
+            },
+            getTodoById: (state) => (id) => {
+                return state.todos.find(todo => todo.id === id)
             }
         }
     })
@@ -44,7 +47,7 @@
             }
         }
     }
-    // console 中输入store.getters.doneTodos 访问到方法
+    // console 中输入store.getters.getTodoById(2)
     new Vue({
         el: '#root',
         store,
