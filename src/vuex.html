@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vuex 用法</title>
+</head>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+
+<body>
+<div id="root">
+<button @click="add"> + </button>
+{{count}}
+</div>
+<script>
+    Vue.use(Vuex)
+
+    const store = new Vuex.Store({
+        state: {
+            count: 0
+        },
+        mutations: {
+            increment(state) {
+                state.count ++
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                message: 'Test Extend Component'
+            }
+        },
+        computed:{
+            count(){
+                return store.state.count
+            }
+        },
+        methods:{
+            add(){
+                store.commit('increment')
+            }
+        }
+    })
+</script>
+</body>
+</html>
