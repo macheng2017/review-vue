@@ -24,6 +24,10 @@
         getters: {
             doneTodos: state => {
                 return state.todos.filter(todo => todo.done)
+            },
+            // Getter 也可以接受其他 getter 作为第二个参数：
+            doneTodosCount: (state, getters) => {
+                return getters.doneTodos.length
             }
         }
     })
