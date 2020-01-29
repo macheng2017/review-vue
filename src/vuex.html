@@ -10,16 +10,10 @@
 
 <body>
 <div id="root">
-<button @click="add"> + </button>
-{{count}}
+    <button @click="add"> +</button>
+    <Counter/>
 </div>
 <script>
-    // 对经常使用webpack构建的同学们来说,这里有些奇怪,为什么没有使用import导入就可以直接使用Vue以及Vuex?
-    // 如果是采用单个网页中<script src="">引用而不是使用webpack构建工具的话这里可以不用使用import导入
-    // 可以点击查看源码,可以找到证据
-    // (global = global || self, global.Vuex = factory());
-    // https://unpkg.com/vuex 在这个引入连接中Vuex被注册到了全局变量当中
-    // 下面直接可以使用了
     Vue.use(Vuex)
 
     const store = new Vuex.Store({
@@ -28,11 +22,20 @@
         },
         mutations: {
             increment(state) {
-                state.count ++
+                state.count++
             }
         }
     })
-
+    // 创建一个 Counter组件
+    const Counter = {
+        template: `
+            <div>{{count}}</div>`,
+        computed: {
+            count() {
+                return store.state.count
+            }
+        }
+    }
 
     new Vue({
         el: '#root',
@@ -41,13 +44,9 @@
                 message: 'Test Extend Component'
             }
         },
-        computed:{
-            count(){
-                return store.state.count
-            }
-        },
-        methods:{
-            add(){
+        components: {Counter},
+        methods: {
+            add() {
                 store.commit('increment')
             }
         }
