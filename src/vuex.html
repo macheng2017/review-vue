@@ -31,8 +31,11 @@
     const Counter = {
         template: `
             <div>count: {{count}} </div>`,
-        // 映射 this.count 为 store.state.count
-        computed: mapState(['count'])
+        computed: {
+            localComputed () { /* ... */ },
+            // 使用对象展开运算符将此对象混入到外部对象中
+            ...mapState(['count'])
+        }
     }
 
     new Vue({
