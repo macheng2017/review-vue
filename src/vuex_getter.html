@@ -14,6 +14,7 @@
 </div>
 <script>
     Vue.use(Vuex)
+    const mapGetters = Vuex.mapGetters
     const store = new Vuex.Store({
         state: {
             todos: [
@@ -42,9 +43,8 @@
         template: `
             <div id="el"> {{doneTodosCount}}</div>`,
         computed: {
-            doneTodosCount() {
-                return this.$store.getters.doneTodosCount
-            }
+            // 使用对象展开运算符将 getter 混入 computed 对象中
+            ...mapGetters(['doneTodosCount'])
         }
     }
     // console 中输入store.getters.getTodoById(2)
