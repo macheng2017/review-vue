@@ -14,6 +14,8 @@
     <Counter/>
 </div>
 <script>
+    // 在单独构建的版本中辅助函数为 Vuex.mapState
+    const mapState = Vuex.mapState
     Vue.use(Vuex)
     const store = new Vuex.Store({
         state: {
@@ -25,21 +27,19 @@
             }
         }
     })
-    // 创建一个 Counter组件
+
     const Counter = {
         template: `
             <div>{{count}}</div>`,
-        computed: {
-            count(){
-                // 通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。让我们更新下 Counter 的实现：
-                return this.$store.state.count
-            }
-        }
+        computed: mapState({
+            // 箭头函数可使代码更简练
+            count: state => state.count
+        })
     }
 
     new Vue({
         el: '#root',
-        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
+        store,
         data() {
             return {
                 message: 'Test Extend Component'
