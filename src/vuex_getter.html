@@ -10,7 +10,7 @@
 
 <body>
 <div id="root">
-
+    <Todo></Todo>
 </div>
 <script>
     Vue.use(Vuex)
@@ -35,10 +35,20 @@
             }
         }
     })
+    const Todo = {
+        template: `
+            <div id="el"> {{doneTodosCount}}</div>`,
+        computed: {
+            doneTodosCount() {
+                return this.$store.getters.doneTodosCount
+            }
+        }
+    }
     // console 中输入store.getters.doneTodos 访问到方法
     new Vue({
         el: '#root',
         store,
+        components: {Todo}
     })
 </script>
 </body>
