@@ -26,7 +26,11 @@
                 return state.todos.filter(todo => todo.done)
             },
             // Getter 也可以接受其他 getter 作为第二个参数：
+            // 很奇怪的是 👇这个函数中没有需要state这个参数的地方,那么这个state
+            // 在哪里被使用了? 猜测应该是在doneTodosCount内部 getters.doneTodos这个位置传递进去了
             doneTodosCount: (state, getters) => {
+                // 试过了这样不行
+                // return getters.doneTodos(state).length
                 return getters.doneTodos.length
             }
         }
