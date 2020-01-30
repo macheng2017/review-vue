@@ -22,8 +22,8 @@
             count: 0
         },
         mutations: {
-            increment(state) {
-                state.count++
+            increment(state, n) {
+                state.count += n
             }
         }
     })
@@ -32,7 +32,8 @@
         template: `
             <div>count: {{count}} </div>`,
         computed: {
-            localComputed () { /* ... */ },
+            localComputed() { /* ... */
+            },
             // 使用对象展开运算符将此对象混入到外部对象中
             ...mapState(['count'])
         }
@@ -51,7 +52,8 @@
         components: {Counter},
         methods: {
             add() {
-                store.commit('increment')
+                // 你可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）：
+                store.commit('increment', 10)
             }
         }
     })
