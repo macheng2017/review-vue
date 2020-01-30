@@ -13,6 +13,7 @@
     <button @click="increment"> +1</button>
     <!--这里需要传递一个对象 -->
     <button @click="incrementBy({amount:10})"> +10</button>
+    <button @click="add"> +1</button>
     <Counter/>
 </div>
 <script>
@@ -31,6 +32,12 @@
             },
             increment(state) {
                 state.count++
+            }
+        },
+        // 注册一个action
+        actions: {
+            increment(context) {
+                context.commit('increment')
             }
         }
     })
@@ -58,6 +65,9 @@
         },
         components: {Counter},
         methods: {
+            add() {
+                this.$store.dispatch('increment')
+            },
             ...mapMutations([
                 // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
                 'increment',
