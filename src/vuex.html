@@ -38,7 +38,10 @@
         actions: {
             // 使用ES6参数解构简化代码
             increment({commit}) {
-                commit('increment')
+                // 在action中可以使用异步操作,mutation中只能是同步的
+                setTimeout(() => {
+                    commit('increment')
+                }, 1000)
             }
         }
     })
