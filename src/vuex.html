@@ -36,8 +36,9 @@
         },
         // 注册一个action
         actions: {
-            increment(context) {
-                context.commit('increment')
+            // 使用ES6参数解构简化代码
+            increment({commit}) {
+                commit('increment')
             }
         }
     })
