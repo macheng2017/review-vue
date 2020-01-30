@@ -10,20 +10,27 @@
 
 <body>
 <div id="root">
-    <button @click="add"> +</button>
+    <button @click="increment"> +1</button>
+    <!--这里需要传递一个对象 -->
+    <button @click="incrementBy({amount:10})"> +10</button>
     <Counter/>
 </div>
 <script>
     // 在单独构建的版本中辅助函数为 Vuex.mapState
     const mapState = Vuex.mapState
+    const mapMutations = Vuex.mapMutations
+
     Vue.use(Vuex)
     const store = new Vuex.Store({
         state: {
             count: 0
         },
         mutations: {
-            increment(state, payload) {
+            incrementBy(state, payload) {
                 state.count += payload.amount
+            },
+            increment(state) {
+                state.count++
             }
         }
     })
@@ -51,15 +58,13 @@
         },
         components: {Counter},
         methods: {
-            add() {
-                // 你可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）：
-                // 在大多数情况下，载荷应该是一个对象，这样可以包含多个字段并且记录的 mutation 会更易读：
-                // 对象风格的提交方式
-                store.commit({
-                    type: 'increment',
-                    amount: 10
-                })
-            }
+            ...mapMutations([
+                // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
+                'increment',
+                // `mapMutations` 也支持载荷：
+                //  // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
+                'incrementBy'
+            ])
         }
     })
 </script>
