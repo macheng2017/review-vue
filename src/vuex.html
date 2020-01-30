@@ -37,10 +37,10 @@
         // 注册一个action
         actions: {
             // 使用ES6参数解构简化代码
-            increment({commit}) {
+            incrementAsync({commit}, payload) {
                 // 在action中可以使用异步操作,mutation中只能是同步的
                 setTimeout(() => {
-                    commit('increment')
+                    commit('incrementBy', payload)
                 }, 1000)
             }
         }
@@ -70,7 +70,7 @@
         components: {Counter},
         methods: {
             add() {
-                this.$store.dispatch('increment')
+                this.$store.dispatch('incrementAsync', {amount: 100})
             },
             ...mapMutations([
                 // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
