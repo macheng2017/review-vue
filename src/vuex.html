@@ -12,7 +12,7 @@
 <div id="root">
     <button @click="increment"> 无载荷+1</button>
     <!--这里需要传递一个对象 -->
-    <button @click="incrementBy({amount:10})">通过Mutation同步分发 +10</button>
+    <button @click="incrementBy({amount:10})">通过action分发 +10</button>
     <button @click="incrementAsync({amount:100})">通过action异步分发 +100</button>
     <Counter/>
 </div>
@@ -43,6 +43,12 @@
                 setTimeout(() => {
                     commit('incrementBy', payload)
                 }, 1000)
+            },
+            incrementBy({commit}, payload) {
+                commit('incrementBy', payload)
+            },
+            increment({commit}) {
+                commit('increment')
             }
         }
     })
@@ -70,23 +76,7 @@
         },
         components: {Counter},
         methods: {
-            add() {
-                // 以对象形式分发
-                this.$store.dispatch(
-                    {
-                        type: 'incrementAsync',
-                        amount: 100
-                    }
-                )
-            },
-            ...mapMutations([
-                // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
-                'increment',
-                // `mapMutations` 也支持载荷：
-                //  // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
-                'incrementBy'
-            ]),
-            ...mapActions(['incrementAsync'])
+            ...mapActions(['incrementAsync', 'incrementBy','increment'])
         }
     })
 </script>
