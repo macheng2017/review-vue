@@ -10,16 +10,17 @@
 
 <body>
 <div id="root">
-    <button @click="increment"> +1</button>
+    <button @click="increment"> 无载荷+1</button>
     <!--这里需要传递一个对象 -->
-    <button @click="incrementBy({amount:10})"> +10</button>
-    <button @click="add"> +1</button>
+    <button @click="incrementBy({amount:10})">通过Mutation同步分发 +10</button>
+    <button @click="incrementAsync({amount:100})">通过action异步分发 +100</button>
     <Counter/>
 </div>
 <script>
     // 在单独构建的版本中辅助函数为 Vuex.mapState
     const mapState = Vuex.mapState
     const mapMutations = Vuex.mapMutations
+    const mapActions = Vuex.mapActions
 
     Vue.use(Vuex)
     const store = new Vuex.Store({
@@ -84,7 +85,8 @@
                 // `mapMutations` 也支持载荷：
                 //  // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
                 'incrementBy'
-            ])
+            ]),
+            ...mapActions(['incrementAsync'])
         }
     })
 </script>
