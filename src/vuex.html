@@ -12,7 +12,7 @@
 <div id="root">
     <button @click="increment"> 无载荷+1</button>
     <!--这里需要传递一个对象 -->
-    <button @click="incrementBy({amount:10})">通过action分发 +10</button>
+    <button @click="add({amount:10})">通过action分发 +10</button>
     <button @click="incrementAsync({amount:100})">通过action异步分发 +100</button>
     <Counter/>
 </div>
@@ -76,7 +76,13 @@
         },
         components: {Counter},
         methods: {
-            ...mapActions(['incrementAsync', 'incrementBy','increment'])
+            ...mapActions({
+                incrementAsync: 'incrementAsync',
+                //  将 `this.add()` 映射为 `this.$store.dispatch('incrementBy', payload)`
+                add: 'incrementBy',
+                // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+                increment: 'increment'
+            })
         }
     })
 </script>
