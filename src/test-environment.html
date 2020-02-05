@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>el-cascader 试验环境</title>
+</head>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vuex"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<body>
+<div id="root">
+    <span class="demonstration">默认 click 触发子菜单</span>
+    <el-cascader
+            v-model="value"
+            :options="options"
+            @change="handleChange">
+    </el-cascader>
+</div>
+
+<script>
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                value: [],
+                options: [{
+                    value: 'zhinan',
+                    label: '指南',
+                    children: [{
+                        value: 'shejiyuanze',
+                        label: '设计原则',
+                        children: [{
+                            value: 'yizhixing',
+                            label: '一致性'
+                        }]
+                    }],
+
+                }, {
+                    value: 'jinjie',
+                    label: '进阶',
+                    children: [{
+                        value: 'erji',
+                        label: '二级',
+                        children: [{
+                            value: 'sanji',
+                            label: '三级'
+                        }]
+                    }]
+                }]
+            }
+        },
+        methods: {
+            handleChange(value) {
+                console.log(value);
+            }
+        }
+    })
+</script>
+</body>
+</html>
